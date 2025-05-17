@@ -245,9 +245,9 @@ const PerformanceDashboard = ({
                       <h3 className="font-medium">UI Update</h3>
                     </div>
                     <span
-                      className={`text-xl font-bold ${getLatencyColor(currentMetrics.uiUpdateLatency)}`}
+                      className={`text-xl font-bold ${getLatencyColor(currentMetrics?.uiUpdateLatency ?? 0)}`}
                     >
-                      {currentMetrics.uiUpdateLatency.toFixed(2)} ms
+                      {(currentMetrics?.uiUpdateLatency ?? 0).toFixed(2)} ms
                     </span>
                   </div>
                   <p className="text-xs text-muted-foreground mt-2">
@@ -264,9 +264,9 @@ const PerformanceDashboard = ({
                       <h3 className="font-medium">End-to-End</h3>
                     </div>
                     <span
-                      className={`text-xl font-bold ${getLatencyColor(currentMetrics.endToEndLatency)}`}
+                      className={`text-xl font-bold ${getLatencyColor(currentMetrics?.endToEndLatency ?? 0)}`}
                     >
-                      {currentMetrics.endToEndLatency.toFixed(2)} ms
+                      {(currentMetrics?.endToEndLatency ?? 0).toFixed(2)} ms
                     </span>
                   </div>
                   <p className="text-xs text-muted-foreground mt-2">

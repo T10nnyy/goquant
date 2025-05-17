@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -28,6 +28,7 @@ const SimulationPanel = ({
   onRunSimulation = () => {},
   isRunning = false,
 }: SimulationPanelProps) => {
+  const [autoRun, setAutoRun] = useState<boolean>(false);
   const [quantity, setQuantity] = useState<number>(100);
   const [volatility, setVolatility] = useState<number>(50);
   const [feeTier, setFeeTier] = useState<string>("tier1");
@@ -54,6 +55,13 @@ const SimulationPanel = ({
       feeTier,
     });
   };
+
+  // Auto-run simulation when data changes if autoRun is enabled
+  useEffect(() => {
+    if (autoRun) {
+      handleRunSimulation();
+    }
+  }, [quantity, volatility, feeTier, autoRun]);
 
   return (
     <Card className="w-full max-w-md bg-white shadow-md">

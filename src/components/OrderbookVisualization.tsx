@@ -1,4 +1,5 @@
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect, useMemo, useRef } from "react";
+import { AlertCircle } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
@@ -42,6 +43,15 @@ const OrderbookVisualization: React.FC<OrderbookVisualizationProps> = ({
   },
   maxDepth = 10,
 }) => {
+  const [error, setError] = useState<string | null>(null);
+  const [connectionStatus, setConnectionStatus] =
+    useState<string>("disconnected");
+  const processingTimeRef = useRef<number>(0);
+  const [displayData, setDisplayData] = useState(data);
+
+  useEffect(() => {
+    setDisplayData(data);
+  }, [data]);
   const [activeTab, setActiveTab] = useState<string>("table");
 
   // Calculate the maximum quantity for scaling the depth chart
@@ -234,8 +244,23 @@ const OrderbookVisualization: React.FC<OrderbookVisualizationProps> = ({
           </TabsContent>
         </Tabs>
 
-        <div className="text-xs text-gray-500 mt-4 text-right">
-          Last updated: {new Date(data.timestamp).toLocaleTimeString()}
+        <div className="flex justify-between text-xs text-gray-500 mt-4">
+          {error && (
+            <div className="text-red-500 flex items-center gap-1">
+              <AlertCircle className="h-3 w-3" />
+              {error}
+            </div>
+          )}
+          <div className="ml-auto">
+            {connectionStatus === "connected" && (
+              <span>
+                Processing time: {processingTimeRef.current.toFixed(2)}ms
+              </span>
+            )}
+          </div>
+          <div className="ml-2">
+            Last updated: {new Date(displayData.timestamp).toLocaleTimeString()}
+          </div>
         </div>
       </CardContent>
     </Card>

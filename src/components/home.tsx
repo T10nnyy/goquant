@@ -92,7 +92,13 @@ const Home = () => {
                 <TabsTrigger value="rendering">Rendering</TabsTrigger>
               </TabsList>
               <TabsContent value="latency" className="mt-0">
-                <PerformanceDashboard />
+                <PerformanceDashboard
+                  currentMetrics={{
+                    dataProcessingLatency: 15,
+                    uiUpdateLatency: 10,
+                    endToEndLatency: 25,
+                  }}
+                />
               </TabsContent>
               <TabsContent value="processing" className="mt-0">
                 <div className="h-[200px] flex items-center justify-center text-muted-foreground">
